@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "id": "9cb5",
+      "email": "jofinjomin15@gmail.com",
+      "password": "Robertdowney15",
+      "addresses": [],
+      "role": "user"
+    },
+    {
+      "id": "60b8",
+      "email": "business.sarvm@gmail.com",
+      "password": "Robertdowney15",
+      "addresses": [],
+      "role": "user"
+    }
+  ]
+}
