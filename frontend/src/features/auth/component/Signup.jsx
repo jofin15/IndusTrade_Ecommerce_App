@@ -39,6 +39,8 @@ function Signup() {
               console.log("Sign up data:-", data);
               dispatch(
                 createUserAsync({
+                  name:data.name,
+                  company:data.companyName,
                   email: data.email,
                   password: data.password,
                   addresses: [],
@@ -48,6 +50,47 @@ function Signup() {
               reset();
             })}
           >
+
+            <div>
+              <label
+                htmlFor="Name"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Your Name
+              </label>
+
+              <div className="mt-2">
+                <input
+                  id="name"
+                  type="string"
+                  {...register("name", {
+                    required: "Name is required",
+                  })}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 place"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="Name"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Your Company Name
+              </label>
+
+              <div className="mt-2">
+                <input
+                  id="companyName"
+                  type="string"
+                  {...register("companyName", {
+                    required: "comapany name is required",
+                  })}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 place"
+                />
+              </div>
+            </div>
+
             <div>
               <label
                 htmlFor="email"
