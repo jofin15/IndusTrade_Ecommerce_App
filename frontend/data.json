@@ -2441,7 +2441,35 @@
       "company": "Jr enterprises",
       "email": "jofinjomin15@gmail.com",
       "password": "Robertdowney15",
-      "addresses": [],
+      "addresses": [
+        {
+          "name": "JOFIN",
+          "email": "jofinjomin15@gmail.com",
+          "phone": "09152056712",
+          "street": "near amar palace ,mira road ,mumbai, 202 a wing ,patel plaza",
+          "city": "mumbai",
+          "state": "Maharashtra",
+          "pincode": "401107"
+        },
+        {
+          "name": "Jomin",
+          "email": "jofinjomin15@gmail.com",
+          "phone": "123456",
+          "street": "near amar palace ,mira road ,mumbai, 202 a wing ,patel plaza",
+          "city": "mumbai",
+          "state": "Maharashtra",
+          "pincode": "401107"
+        },
+        {
+          "name": "Mini",
+          "email": "jofinjomin15@gmail.com",
+          "phone": "09152056712",
+          "street": "near amar palace ,mira road ,mumbai, 202 a wing ,patel plaza",
+          "city": "mumbai",
+          "state": "Maharashtra",
+          "pincode": "401107"
+        }
+      ],
       "role": "user"
     },
     {
@@ -2476,6 +2504,130 @@
     },
     {
       "id": "c459"
+    }
+  ],
+  "cart": [
+    {
+      "id": "3",
+      "title": "Samsung Universe 9",
+      "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
+      "price": 1249,
+      "discountPercentage": 15.46,
+      "rating": 4.09,
+      "stock": 36,
+      "brand": "Samsung",
+      "category": "smartphones",
+      "thumbnail": "https://cdn.dummyjson.com/product-images/3/thumbnail.jpg",
+      "images": [
+        "https://cdn.dummyjson.com/product-images/3/1.jpg"
+      ],
+      "quantity": 5,
+      "user": "1371"
+    },
+    {
+      "id": "10",
+      "title": "HP Pavilion 15-DK1056WM",
+      "description": "HP Pavilion 15-DK1056WM Gaming Laptop 10th Gen Core i5, 8GB, 256GB SSD, GTX 1650 4GB, Windows 10",
+      "price": 1099,
+      "discountPercentage": 6.18,
+      "rating": 4.43,
+      "stock": 89,
+      "brand": "HP Pavilion",
+      "category": "laptops",
+      "thumbnail": "https://cdn.dummyjson.com/product-images/10/thumbnail.jpeg",
+      "images": [
+        "https://cdn.dummyjson.com/product-images/10/1.jpg",
+        "https://cdn.dummyjson.com/product-images/10/2.jpg",
+        "https://cdn.dummyjson.com/product-images/10/3.jpg",
+        "https://cdn.dummyjson.com/product-images/10/thumbnail.jpeg"
+      ],
+      "quantity": 3,
+      "user": "1371"
+    }
+  ],
+  "orders": [
+    {
+      "id": "66ff",
+      "cart": [
+        {
+          "id": "3",
+          "title": "Samsung Universe 9",
+          "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
+          "price": 1249,
+          "discountPercentage": 15.46,
+          "rating": 4.09,
+          "stock": 36,
+          "brand": "Samsung",
+          "category": "smartphones",
+          "thumbnail": "https://cdn.dummyjson.com/product-images/3/thumbnail.jpg",
+          "images": [
+            "https://cdn.dummyjson.com/product-images/3/1.jpg"
+          ],
+          "quantity": 5,
+          "user": "1371"
+        },
+        {
+          "id": "10",
+          "title": "HP Pavilion 15-DK1056WM",
+          "description": "HP Pavilion 15-DK1056WM Gaming Laptop 10th Gen Core i5, 8GB, 256GB SSD, GTX 1650 4GB, Windows 10",
+          "price": 1099,
+          "discountPercentage": 6.18,
+          "rating": 4.43,
+          "stock": 89,
+          "brand": "HP Pavilion",
+          "category": "laptops",
+          "thumbnail": "https://cdn.dummyjson.com/product-images/10/thumbnail.jpeg",
+          "images": [
+            "https://cdn.dummyjson.com/product-images/10/1.jpg",
+            "https://cdn.dummyjson.com/product-images/10/2.jpg",
+            "https://cdn.dummyjson.com/product-images/10/3.jpg",
+            "https://cdn.dummyjson.com/product-images/10/thumbnail.jpeg"
+          ],
+          "quantity": 3,
+          "user": "1371"
+        }
+      ],
+      "totalAmount": 9542,
+      "totalItems": 8,
+      "user1": {
+        "id": "1371",
+        "name": "JOFIN",
+        "company": "Jr enterprises",
+        "email": "jofinjomin15@gmail.com",
+        "password": "Robertdowney15",
+        "addresses": [
+          {
+            "name": "JOFIN",
+            "email": "jofinjomin15@gmail.com",
+            "phone": "09152056712",
+            "street": "near amar palace ,mira road ,mumbai, 202 a wing ,patel plaza",
+            "city": "mumbai",
+            "state": "Maharashtra",
+            "pincode": "401107"
+          },
+          {
+            "name": "Jomin",
+            "email": "jofinjomin15@gmail.com",
+            "phone": "123456",
+            "street": "near amar palace ,mira road ,mumbai, 202 a wing ,patel plaza",
+            "city": "mumbai",
+            "state": "Maharashtra",
+            "pincode": "401107"
+          }
+        ],
+        "role": "user"
+      },
+      "paymentMethod": "cash",
+      "selectedAddress": {
+        "name": "JOFIN",
+        "email": "jofinjomin15@gmail.com",
+        "phone": "09152056712",
+        "street": "near amar palace ,mira road ,mumbai, 202 a wing ,patel plaza",
+        "city": "mumbai",
+        "state": "Maharashtra",
+        "pincode": "401107"
+      },
+      "status": "pending"
     }
   ]
 }

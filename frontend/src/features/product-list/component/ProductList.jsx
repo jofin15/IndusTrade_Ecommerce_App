@@ -1,23 +1,30 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
+import { Link } from "react-router-dom";
+import { ITEM_PER_PAGE } from "../../../app/constant";
+
 import {
   ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
   FunnelIcon,
   MinusIcon,
   PlusIcon,
   Squares2X2Icon,
+  StarIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-// import DesktopFilter from "./DesktopFilter";
-import ProductGrid from "./ProductGrid";
+
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   fetchBrandAsync,
   fetchCategoryAsync,
+  fetchProductsByFilterAsync,
   selectBrands,
   selectCategories,
+  selectProducts,
 } from "../productSlice";
-import { fetchCategories } from "../productAPI";
 
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "", current: true },
@@ -33,7 +40,11 @@ export default function ProductList() {
   const dispatch = useDispatch();
   const brands = useSelector(selectBrands);
   const categories = useSelector(selectCategories);
+  const products = useSelector(selectProducts);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [page, setPage] = useState(0);
+const [filter,setFilter]=useState({})
+const [sort,setSort]=useState({})
 
   const filters = [
     {
@@ -53,18 +64,57 @@ export default function ProductList() {
     dispatch(fetchCategoryAsync());
   }, []);
 
+  useEffect(() => {
+    console.log("filter:- ",filter);
+    const pagination = { _start: page * 10, _limit: ITEM_PER_PAGE };
+    dispatch(fetchProductsByFilterAsync({pagination,filter,sort}));
+  }, [page,filter,sort]);
+
+useEffect(()=>{
+setPage(0)
+},[filter,sort])
+
+  const handlePage=(page)=>{
+   setPage(page)
+  }
+
+  const handleFilter=(e,section,option)=>{
+    const newFilter={...filter}
+
+    if (e.target.checked){
+      if (newFilter[section.id]){
+        newFilter[section.id].push(option.value)
+      }else{
+        newFilter[section.id]=[option.value]
+      }
+    }else{
+      const index=newFilter[section.id].findIndex((el)=>el===option.value);
+      newFilter[section.id].splice(index,1)
+
+    }
+    console.log("new filter",newFilter);
+    setFilter(newFilter)
+
+  } 
+
+  const handleSort=(e,option)=>{
+    const sort={_sort:option.sort,_order:option.order};
+    console.log("sorting:- ",sort);
+    setSort(sort)
+
+  }
+
   return (
     <div className="bg-white">
       <div>
-
-      <MobileFilter
-          // handleFilter={handleFilter}
+        <MobileFilter
+          handleFilter={handleFilter}
           filters={filters}
           mobileFiltersOpen={mobileFiltersOpen}
           setMobileFiltersOpen={setMobileFiltersOpen}
         />
 
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <main className="mx-auto  px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-12">
             <h1 className="text-4xl font-medium tracking-tight text-grey-900">
               All Products
@@ -97,7 +147,7 @@ export default function ProductList() {
                         <Menu.Item key={option.name}>
                           {({ active }) => (
                             <p
-                              // onClick={(e) => handleSort(e, option)}
+                              onClick={(e) => handleSort(e, option)}
                               className={classNames(
                                 option.current
                                   ? "font-medium text-gray-900"
@@ -140,12 +190,14 @@ export default function ProductList() {
             </h2>
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/*Filters*/}
-              <DesktopFilter filters={filters} />
+              <DesktopFilter filters={filters} handleFilter={handleFilter} />
 
               {/*Product Grid*/}
-              <ProductGrid />
+              <ProductGrid products={products} />
             </div>
           </section>
+
+          <Pagination page={page} setPage={setPage} handlePage={handlePage} />
         </main>
       </div>
     </div>
@@ -277,7 +329,7 @@ function MobileFilter({
   );
 }
 
-function DesktopFilter({ filters }) {
+function DesktopFilter({ filters,handleFilter }) {
   return (
     <>
       <form className="hidden lg:block">
@@ -313,7 +365,7 @@ function DesktopFilter({ filters }) {
                           defaultValue={option.value}
                           type="checkbox"
                           defaultChecked={option.checked}
-                          // onChange={(e) => handleFilter(e, section, option)}
+                          onChange={(e) => handleFilter(e, section, option)}
                           className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                         />
                         <label
@@ -332,5 +384,121 @@ function DesktopFilter({ filters }) {
         ))}
       </form>
     </>
+  );
+}
+
+function ProductGrid({ products }) {
+  return (
+    <>
+      <div className="lg:col-span-3">
+        <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
+          <div className="mt-1 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+            {products.map((product) => (
+              <Link to={`/product-details/${product.id}`} key={product.id}>
+                <div
+                  key={product.id}
+                  className="group relative border-solid border-2 border-gray-200 p-2"
+                >
+                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
+                    <img
+                      src={product.thumbnail}
+                      alt={product.title}
+                      className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                    />
+                  </div>
+                  <div className="mt-4 flex justify-between">
+                    <div>
+                      <h3 className="text-sm text-gray-700 ">
+                        <span className="absolute inset-0" /> {product.title}
+                      </h3>
+                      <p className="mt-1 text-sm text-gray-500">
+                        <StarIcon className="h-3 w-3 inline" />{" "}
+                        <span className="align-bottom">{product.rating}</span>
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-medium text-gray-500 line-through">
+                        ₹{product.price}
+                      </p>
+                      <p className="text-sm font-medium text-gray-900">
+                        ₹{" "}
+                        {Math.round(
+                          product.price *
+                            (1 - product.discountPercentage / 100),
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function Pagination({ page, setPage, totalItems = 100, handlePage }) {
+  const totalPages = Math.ceil(totalItems / ITEM_PER_PAGE);
+  return (
+    <div>
+      <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+        <div className="flex flex-1 justify-between lg:hidden">
+          <div className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer">
+            Previous
+          </div>
+
+          <div className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer">
+            Next
+          </div>
+        </div>
+
+        <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm text-gray-700">
+              showing{" "}
+              <span className="font-medium">{page * ITEM_PER_PAGE + 1}</span> to{" "}
+              <span className="font-medium">
+                {page * ITEM_PER_PAGE + 10 > totalItems
+                  ? totalItems
+                  : page * ITEM_PER_PAGE + 10}
+              </span>{" "}
+              of <span className="font-medium">{totalItems}</span> results
+            </p>
+          </div>
+
+          <div>
+            <nav
+              className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+              aria-label="Pagination"
+            >
+              <div className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                <span className="sr-only">Previous</span>
+                <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" onClick={(e)=>handlePage(page>0?page-1:page)}/>
+              </div>
+
+              {Array.from({
+                length: Math.ceil(totalItems / ITEM_PER_PAGE),
+              }).map((el, index) => (
+                <div
+                  aria-current="page"
+                  className={`relative z-10 inline-flex items-center ${index === page ? "bg-indigo-600 text-white " : "bg-white text-black"} cursor-pointer px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                  onClick={(e) => handlePage(index)}
+                >
+                  {index + 1}
+                </div>
+              ))}
+
+              <div className="relative inline-flex items-center rounded-r-md px-2 py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-300 focus:outline-offset-0 cursor-pointer">
+                <span className="sr-only">Next</span>
+                <ChevronRightIcon className="h-5 w-5" aria-hidden="true" onClick={(e)=>handlePage(page<totalPages-1?page+1:page)}/>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

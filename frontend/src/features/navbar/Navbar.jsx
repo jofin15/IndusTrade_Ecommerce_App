@@ -4,11 +4,14 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../auth/authSlice";
+import {selectCart} from "../cart/cartSlice"
+
 import {
   Bars3Icon,
   ShoppingCartIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+
 const navigation = [
   { name: "Home", link: "/", user: "true" },
   { name: "Products", link: "/admin", admin: "true" },
@@ -27,15 +30,18 @@ function classNames(...classes) {
 
 function Navbar({ children }) {
   const user = useSelector(selectUser);
+  const cart=useSelector(selectCart)
+
   const user1 = user ? user[0] : null;
   console.log("user data in navbar", user1);
+  console.log("My Cart:- ",cart);
 
   return (
     <div className="min-h-full sticky top-0">
       <Disclosure as="nav" className="bg-orange-200">
         {({ open }) => (
           <>
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto  px-4 sm:px-6 lg:px-8">
               <div className="flex h-16 items-center justify-between">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
@@ -72,7 +78,7 @@ function Navbar({ children }) {
                 <div className="hidden md:block">
                   <div className="ml-4 flex items-center md:ml-6">
                     <div className="relative">
-                      <Link>
+                      <Link to="/cart">
                         <button
                           type="button"
                           className="relative rounded-full  p-1 text-orange-600 hover:text-yellow-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -84,6 +90,7 @@ function Navbar({ children }) {
                           />
                         </button>
                       </Link>
+                      {cart.length > 0 && <span className="absolute -top-2 -right-1 inline-flex items-center rounded-lg bg-yellow-100 px-1.5 py-0.5 text-xs font-medium text-orange-600 ring-1 ring-inset ring-red-600/10">{cart.length}</span>}
                     </div>
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
@@ -202,8 +209,10 @@ function Navbar({ children }) {
                         />
                       </button>
 
-                      {/* {cart.length > 0 && 
-                        <span className="absolute -top-2 -right-1 inline-flex items-center rounded-md bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10"></span>} */}
+                      {cart.length > 0 && 
+                        <span className="absolute -top-2 -right-1 inline-flex items-center rounded-md bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10"></span>
+                      }
+
                     </Link>
                   </div>
                 </div>
@@ -226,7 +235,7 @@ function Navbar({ children }) {
       </Disclosure>
 
       <header className="bg-white shadow">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mx-auto px-4 py-6 sm:px-6 lg:px-8">
           <h1 className="text-2xl font-regular tracking-tight text-gray-900">
             Welcome back,{" "}
             <span className="text-3xl font-medium text-orange-600 ">
@@ -236,7 +245,7 @@ function Navbar({ children }) {
         </div>
       </header>
       <main>
-        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{children}</div>
+        <div className="mx-auto py-6 sm:px-6 lg:px-8">{children}</div>
       </main>
     </div>
   );
