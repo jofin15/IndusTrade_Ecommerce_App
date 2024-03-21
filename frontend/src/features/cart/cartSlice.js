@@ -45,14 +45,14 @@ export const deleteItemFromCartAsync = createAsyncThunk(
   }
 );
 
-// export const resetCartAsync = createAsyncThunk(
-//   'cart/resetCart',
-//   async (userId) => {
-//    const response = await resetCart(userId);
-//     // The value we return becomes the `fulfilled` action payload
-//     return response.data;
-//   }
-// );
+export const resetCartAsync = createAsyncThunk(
+  'cart/resetCart',
+  async (userId) => {
+   const response = await resetCart(userId);
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
 
   const initialState = {
     cartItems: [],
@@ -98,6 +98,14 @@ export const addToCartSlice = createSlice({
       .addCase(fetchItemsByUserIdAsync.fulfilled,(state,action)=>{
         state.status="idle";
         state.cartItems=action.payload
+      })
+
+      .addCase(resetCartAsync.pending,(state)=>{
+        state.status="loading"
+      })
+      .addCase(resetCartAsync.fulfilled,(state,action)=>{
+        state.status="idle";
+        state.cartItems=[]
       })
   },
 });

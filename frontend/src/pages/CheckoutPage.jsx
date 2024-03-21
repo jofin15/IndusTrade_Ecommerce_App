@@ -245,7 +245,7 @@ console.log("currentOrder:- ",currentOrder);
                         </button>
                         <button
                           type="submit"
-                          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          className="rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                           Save
                         </button>
@@ -275,7 +275,7 @@ console.log("currentOrder:- ",currentOrder);
                               name="address"
                               type="radio"
                               value={index}
-                              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                              className="h-4 w-4 border-gray-300 text-orange-600 focus:ring-yellow-600"
                             />
                             <div className="min-w-0 flex-auto">
                               <p className="text-sm font-semibold leading-6 text-gray-900">
@@ -318,7 +318,7 @@ console.log("currentOrder:- ",currentOrder);
                             type="radio"
                             value="cash"
                             checked={paymentMethod==="cash"}
-                            className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            className="h-4 w-4 border-gray-300 text-orange-600 focus:ring-indigo-600"
                             onChange={handlePayment}
                           />
                           <label
@@ -336,7 +336,7 @@ console.log("currentOrder:- ",currentOrder);
                             value="card"
                             checked={paymentMethod==="card"}
                             onChange={handlePayment}
-                            className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            className="h-4 w-4 border-gray-300 text-orange-600 focus:ring-indigo-600"
                           />
                           <label
                             htmlFor="card"
@@ -404,7 +404,7 @@ console.log("currentOrder:- ",currentOrder);
                             <div className="flex">
                               <button
                                 type="button"
-                                className="font-medium text-indigo-600 hover:text-indigo-500"
+                                className="font-medium text-orange-600 hover:text-yellow-500"
                                 onClick={(e) => handleRemove(e, product.id)}
                               >
                                 Remove
@@ -420,7 +420,7 @@ console.log("currentOrder:- ",currentOrder);
                   <div
                     
                     onClick={handleOrder}
-                    className="flex justify-center items-center px-6 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                    className="flex justify-center items-center px-6 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-orange-600 hover:bg-yellow-600"
                   >
                     Order Now
                   </div>

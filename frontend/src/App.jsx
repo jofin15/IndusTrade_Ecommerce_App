@@ -20,6 +20,7 @@ import { fetchItemsByUserIdAsync } from './features/cart/cartSlice';
 import CheckoutPage from './pages/CheckoutPage';
 import { fetchLoggedInUserAsync } from './features/user/userSlice';
 import OrderSuccessPage from './pages/OrderSuccessPage';
+import UserProfilePage from './pages/UserProfilePage';
 
 const router=createBrowserRouter([
   {
@@ -56,8 +57,12 @@ const router=createBrowserRouter([
     element:<ForgetPasswordPage />
   },
   {
-    path:"/order-success/id",
+    path:"/order-success/:id",
     element:<OrderSuccessPage />
+  },
+  {
+    path:"/profile",
+    element:<UserProfilePage />
   }
 ])
 
