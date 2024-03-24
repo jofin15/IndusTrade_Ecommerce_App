@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createOrder } from './orderAPI';
+import { createOrder, fetchAllOrders, updateOrder } from './orderAPI';
 
 export const createOrderAsync = createAsyncThunk(
     'counter/createOrder',
@@ -9,6 +9,27 @@ export const createOrderAsync = createAsyncThunk(
       return response.data;
     }
     );
+
+    export const fetchAllOrderAsync = createAsyncThunk(
+      'counter/fetchAllOrders',
+      async ({pagination,sort}) => {
+        const response = await fetchAllOrders(pagination,sort);
+        console.log("order pagination response:-",response.data);
+        // The value we return becomes the `fulfilled` action payload
+        return response.data;
+      }
+      );
+    
+
+    export const updateOrderAsync = createAsyncThunk(
+      'counter/updateOrder',
+      async (pagination) => {
+        const response = await updateOrder(pagination);
+        console.log("order pagination response:-",response.data);
+        // The value we return becomes the `fulfilled` action payload
+        return response.data;
+      }
+      );
 
 const initialState = {
     orders: [],
@@ -35,6 +56,15 @@ export const orderSlice = createSlice({
           state.orders.push(action.payload);
           state.currentOrder=action.payload
         
+        }) 
+
+        .addCase(updateOrderAsync.pending, (state) => {
+          state.status = 'loading';
+        })
+        .addCase(updateOrderAsync.fulfilled, (state, action) => {
+          state.status = 'idle';
+          const index=state.orders.findIndex(order=>order.id===action.payload.id)
+          state.orders[index]=action.payload;
         }) 
     },
   });

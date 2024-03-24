@@ -21,6 +21,11 @@ import CheckoutPage from './pages/CheckoutPage';
 import { fetchLoggedInUserAsync } from './features/user/userSlice';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import UserProfilePage from './pages/UserProfilePage';
+import UserOrderPage from './pages/UserOrderPage';
+import AdminHomePage from './pages/AdminHomePage';
+import AdminProductDetailPage from './pages/AdminProductDetailPage';
+import AdminProductForm from './pages/AdminProductForm';
+import AdminOrderPage from './pages/AdminOrderPage';
 
 const router=createBrowserRouter([
   {
@@ -63,6 +68,30 @@ const router=createBrowserRouter([
   {
     path:"/profile",
     element:<UserProfilePage />
+  },
+  {
+    path:"/orders",
+    element:<UserOrderPage />
+  },
+  {
+    path:"/admin",
+    element:<AdminHomePage />
+  },
+  {
+    path:"/admin-product-details/:id",
+    element:<AdminProductDetailPage />
+  },
+  {
+    path:"/admin/product-form",
+    element:<AdminProductForm />
+  },
+  {
+    path:"/admin-product-details/edit/:id",
+    element:<AdminProductForm />
+  },
+  {
+    path:"/admin/orders",
+    element:<AdminOrderPage /> 
   }
 ])
 

@@ -15,7 +15,7 @@ import {
 const navigation = [
   { name: "Home", link: "/", user: "true" },
   { name: "Products", link: "/admin", admin: "true" },
-  { name: "orders", link: "/order", admin: "true" },
+  { name: "orders", link: "/admin/orders", admin: "true" },
 ];
 
 const userNavigation = [

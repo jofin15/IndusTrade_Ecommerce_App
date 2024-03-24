@@ -24,7 +24,7 @@ import {
   selectBrands,
   selectCategories,
   selectProducts,
-} from "../productSlice";
+} from "../../product-list/productSlice";
 
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "", current: true },
@@ -36,7 +36,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProductList() {
+export default function AdminProductList() {
   const dispatch = useDispatch();
   const brands = useSelector(selectBrands);
   const categories = useSelector(selectCategories);
@@ -192,8 +192,19 @@ setPage(0)
               {/*Filters*/}
               <DesktopFilter filters={filters} handleFilter={handleFilter} />
 
+              
+              <div className="lg:col-span-3">
+                <div>
+                  <Link type="button" 
+                  to="/admin/product-form" 
+                  className="rounded-md bg-green-600 mx-10 px-3 py-2 text-sm font-semibold leading-6 text-white  my-5">
+                    Add New Products
+                  </Link>
+                </div>
+                                
               {/*Product Grid*/}
-              <ProductGrid products={products} />
+                <ProductGrid products={products} />
+              </div>
             </div>
           </section>
 
@@ -390,48 +401,66 @@ function DesktopFilter({ filters,handleFilter }) {
 function ProductGrid({ products }) {
   return (
     <>
+      {/* <div className="lg:col-span-3"> */}
       <div className="lg:col-span-3">
         <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
           <div className="mt-1 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             {products.map((product) => (
-              <Link to={`/product-details/${product.id}`} key={product.id}>
-                <div
-                  key={product.id}
-                  className="group relative border-solid border-2 border-gray-200 p-2"
-                >
-                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
-                    <img
-                      src={product.thumbnail}
-                      alt={product.title}
-                      className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                    />
-                  </div>
-                  <div className="mt-4 flex justify-between">
-                    <div>
-                      <h3 className="text-sm text-gray-700 ">
-                        <span className="absolute inset-0" /> {product.title}
-                      </h3>
-                      <p className="mt-1 text-sm text-gray-500">
-                        <StarIcon className="h-3 w-3 inline" />{" "}
-                        <span className="align-bottom">{product.rating}</span>
-                      </p>
+              <div>
+                <Link to={`/admin-product-details/${product.id}`} key={product.id}> 
+                  <div
+                    key={product.id}
+                    className="group relative border-solid border-2 border-gray-200 p-2"
+                  >
+                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
+                      <img
+                        src={product.thumbnail}
+                        alt={product.title}
+                        className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                      />
                     </div>
-
-                    <div>
-                      <p className="text-sm font-medium text-gray-500 line-through">
-                        ₹{product.price}
-                      </p>
-                      <p className="text-sm font-medium text-gray-900">
-                        ₹{" "}
-                        {Math.round(
-                          product.price *
-                            (1 - product.discountPercentage / 100),
-                        )}
-                      </p>
+                    <div className="mt-4 flex justify-between">
+                      <div>
+                        <h3 className="text-sm text-gray-700">
+                          <a href={product.href}>
+                            <span
+                              aria-hidden="true"
+                              className="absolute inset-0"
+                            />
+                            {product.title}
+                          </a>
+                        </h3>
+                        <p className="mt-1 text-sm text-gray-500">
+                          <StarIcon className="w-3 h-3 inline" />{" "}
+                          <span className="align-bottom">{product.rating}</span>
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-500 line-through">
+                          ₹ {product.price}
+                        </p>
+                        <p className="text-sm font-medium text-gray-900">
+                          ₹{" "}
+                          {Math.round(
+                            product.price *
+                              (1 - product.discountPercentage / 100),
+                          )}
+                        </p>
+                      </div>
                     </div>
+       
                   </div>
+                </Link>
+                <div>
+                  <Link
+                  to={`/admin-product-details/edit/${product.id}`}
+                    type="button"
+                    className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white mx-auto my-5"
+                  >
+                    Edit Product
+                  </Link>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
@@ -439,8 +468,7 @@ function ProductGrid({ products }) {
     </>
   );
 }
-
-function Pagination({ page, setPage, totalItems = 110, handlePage }) {
+function Pagination({ page, setPage, totalItems = 100, handlePage }) {
   const totalPages = Math.ceil(totalItems / ITEM_PER_PAGE);
   return (
     <div>
